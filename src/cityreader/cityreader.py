@@ -31,7 +31,7 @@ def cityreader(cities=[]):
     # For each city record, create a new City instance and add it to the
     # `cities` list
 
-    with open('cities.csv') as csv_file:
+    with open('/Users/melvineawa/Desktop/work/Lambda/python/Sprint-Challenge--Intro-Python/src/cityreader/cities.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
@@ -83,12 +83,24 @@ for c in cities:
 
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
+    if lat1 > lat2:
+        lat1 = float(lat1)
+        lon1 = float(lon1)
+        lat2 = float(lat2)
+        lon2 = float(lon2)
+
+    else:
+        lat1 = float(lat2)
+        lon1 = float(lon2)
+        lat2 = float(lat1)
+        lon2 = float(lon1)
+
     # within will hold the cities that fall within the specified region
-    within = [city for city in cities if city.lat < lat1 and city.lon < lon1 and city.lat > lat2 and city.lon > lon2]
+    within = [city for city in cities if (lat1 > float(city.lat) > lat2 and lon1 > float(city.lon) > lon2)]
 
     print(f"\n\n")
     for c in within:
-        print(f"{c.name}, {c.lat}, {c.lon}")
+        print(f"{c.name}: ({c.lat}, {c.lon})")
 
     # TODO Ensure that the lat and lon valuse are all floats
     # Go through each city and check to see if it falls within
@@ -97,8 +109,9 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     return within
 
 
-# (lat1, lon1) = input("Enter lat1,lon1: ").strip('').split(' ')
-# (lat2, lon2) = input("Enter lat2,lon2: ").strip('').split(' ')
+(lat1, lon1) = input("Enter lat1,lon1: ").strip('').split(' ')
+(lat2, lon2) = input("Enter lat2,lon2: ").strip('').split(' ')
 
 
-cityreader_stretch(45, -100, 32, -120, cities)
+location_cities = cityreader_stretch(lat1, lon1, lat2, lon2, cities)
+print(location_cities)
