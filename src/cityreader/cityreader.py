@@ -36,12 +36,10 @@ def cityreader(cities=[]):
         line_count = 0
         for row in csv_reader:
             if line_count == 0:
-                # print(f'Column names are {", ".join(row)}')
                 line_count += 1
             else:
                 cities.append(City(row[0], float(row[3]), float(row[4])))
                 line_count += 1
-        # print(f'Data Loaded. {line_count} lines.')
 
     return cities
 
@@ -86,10 +84,21 @@ for c in cities:
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     # within will hold the cities that fall within the specified region
-    within = []
+    within = [city for city in cities if city.lat < lat1 and city.lon < lon1 and city.lat > lat2 and city.lon > lon2]
+
+    print(f"\n\n")
+    for c in within:
+        print(f"{c.name}, {c.lat}, {c.lon}")
 
     # TODO Ensure that the lat and lon valuse are all floats
     # Go through each city and check to see if it falls within
     # the specified coordinates.
 
     return within
+
+
+# (lat1, lon1) = input("Enter lat1,lon1: ").strip('').split(' ')
+# (lat2, lon2) = input("Enter lat2,lon2: ").strip('').split(' ')
+
+
+cityreader_stretch(45, -100, 32, -120, cities)
